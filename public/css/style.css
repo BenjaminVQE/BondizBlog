@@ -14,6 +14,12 @@
     --radius: 1rem;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     color: var(--dark);
@@ -172,13 +178,14 @@ body {
     position: relative;
     border-radius: 1.5rem;
     overflow: hidden;
-    aspect-ratio: 16/10;
+    aspect-ratio: 16/9;
 }
 
 .featured-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform 0.5s ease;
 }
 
@@ -211,7 +218,7 @@ body {
 /* Grid */
 .posts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 2rem;
     margin-bottom: 6rem;
 }
@@ -227,6 +234,7 @@ body {
     color: inherit;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .post-card:hover {
@@ -235,7 +243,7 @@ body {
 }
 
 .card-image-wrapper {
-    aspect-ratio: 4/3;
+    aspect-ratio: 16/9;
     overflow: hidden;
 }
 
@@ -243,6 +251,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform 0.5s ease;
 }
 

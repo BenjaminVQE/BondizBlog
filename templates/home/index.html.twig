@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bondies - Le blog des rencontres
+{% endblock %}
+
+{% block body %}
+	<!-- Navigation -->
+	<nav class="navbar">
+		<div class="container nav-content">
+			<a href="/" class="logo">
+				<span class="text-gradient">Bondiz</span><span style="color: var(--accent);">.</span>
+			</a>
+			<div class="nav-links">
+				<a href="#" class="nav-link active">Accueil</a>
+				<a href="#" class="nav-link">Conseils</a>
+				<a href="#" class="nav-link">Témoignages</a>
+				<a href="#" class="nav-link">À propos</a>
+				{% if is_granted('ROLE_ADMIN') %}
+					<a href="{{ path('admin') }}" class="nav-link">Administration</a>
+				{% endif %}
+			</div>
+{% if app.user %}
+				<div style="display: flex; align-items: center; gap: 1rem;">
+					<span style="font-weight: 600;">{{ app.user.pseudo }}</span>
+					<a href="{{ path('app_logout') }}" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Déconnexion</a>
+				</div>
+			{% else %}
+				<a href="{{ path('app_login') }}" class="btn btn-primary">Espace Membre</a>
+			{% endif %}
+		</div>
+	</nav>
+
+	<!-- Hero Section -->
+	<header class="hero">
+		<div class="container">
+			<h1>Élargissez votre cercle<br><span class="text-gradient">Amical</span>
+			</h1>
+			<p>Des conseils pour rencontrer de nouvelles personnes, partager des activités et créer des amitiés sincères.</p>
+			<a href="#articles" class="btn btn-primary">Explorer les articles</a>
+		</div>
+	</header>
+
+	<main
+		class="container" id="articles">
+
+		<!-- Featured Section -->
+		{% if featuredPost %}
+			<section class="featured-section">
+				<span class="section-label">À la une</span>
+				<article class="featured-card">
+					<div class="featured-image-wrapper">
+						<img src="{{ featuredPost.image }}" alt="{{ featuredPost.title }}" class="featured-image">
+					</div>
+					<div class="featured-content">
+						<div class="featured-tags">
+							<span class="tag">{{ featuredPost.category.name }}</span>
+							<span class="tag">{{ featuredPost.readTime }}
+								de lecture</span>
+						</div>
+						<h2>{{ featuredPost.title }}</h2>
+						<p class="card-excerpt" style="font-size: 1.1rem; line-height: 1.7;">
+							{{ featuredPost.excerpt }}
+						</p>
+						<a href="#" class="btn btn-primary">Lire l'article</a>
+					</div>
+				</article>
+			</section>
+		{% endif %}
+
+		<!-- Post Grid -->
+		<span class="section-label">Dernières publications</span>
+		<div class="posts-grid">
+			{% for post in posts %}
+				<a href="#" class="post-card">
+					<div class="card-image-wrapper">
+						<img src="{{ post.image }}" alt="{{ post.title }}" class="card-image">
+					</div>
+					<div class="card-content">
+						<div class="card-meta">
+							<span style="color: var(--primary); font-weight: 600;">{{ post.category.name }}</span>
+							<span>{{ post.readTime }}</span>
+						</div>
+						<h3 class="card-title">{{ post.title }}</h3>
+						<p class="card-excerpt">{{ post.excerpt }}</p>
+						<div class="read-more">
+							Lire la suite
+							<svg width="20" height="20" viewbox="0 0 24 24" fill="none" class="arrow-icon">
+								<path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>
+					</div>
+				</a>
+			{% else %}
+				<p>Aucun article pour le moment.</p>
+			{% endfor %}
+		</div>
+
+	</main>
+
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="container">
+			<div class="footer-content">
+				<div class="footer-col" style="flex: 2;">
+					<a href="/" class="logo" style="color: white; margin-bottom: 1rem; display: block;">
+						Bondies<span style="color: var(--accent);">.</span>
+					</a>
+					<p style="color: var(--light); max-width: 300px;">
+						La communauté pour se faire des amis, simplement et sans pression. Rencontres amicales et sorties.
+					</p>
+				</div>
+				<div class="footer-col">
+					<h3>Explorer</h3>
+					<ul class="footer-links">
+						<li>
+							<a href="#">Derniers articles</a>
+						</li>
+						<li>
+							<a href="#">Catégories</a>
+						</li>
+						<li>
+							<a href="#">Auteurs</a>
+						</li>
+						<li>
+							<a href="#">Newsletter</a>
+						</li>
+					</ul>
+				</div>
+				<div class="footer-col">
+					<h3>Légal</h3>
+					<ul class="footer-links">
+						<li>
+							<a href="#">Confidentialité</a>
+						</li>
+						<li>
+							<a href="#">Conditions</a>
+						</li>
+						<li>
+							<a href="#">Cookies</a>
+						</li>
+						<li>
+							<a href="#">Contact</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="footer-bottom">
+				<p>&copy; 2026 Bondies Blog. Célébrons l'amitié.</p>
+			</div>
+		</div>
+	</footer>
+{% endblock %}

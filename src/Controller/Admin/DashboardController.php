@@ -22,7 +22,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Bondies Blog');
+            ->setTitle('Bondiz Blog');
     }
 
     public function configureMenuItems(): iterable

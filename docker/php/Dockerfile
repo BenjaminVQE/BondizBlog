@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Dossier de travail
-WORKDIR /app/symfony
+WORKDIR /app
 
 # Permissions
 RUN chown -R www-data:www-data /var/www

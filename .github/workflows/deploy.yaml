@@ -34,12 +34,12 @@ jobs:
       - name: SSH into VPS and deploy  
         run: |
           ssh $VPS_USER@$VPS_IP << EOF
-            echo "--Start Pulling image--"
-            docker pull $REGISTRY_NAME/bondiz-blog
-            echo "--End Pulling image--"
+            echo "Go to directory bondiz-blog"
             cd /home/ubuntu/bondiz-blog/
+            echo "Stop container if exist"
             docker stop bondiz-blog-container || true
+            echo "Remove container if exist"
             docker rm bondiz-blog-container || true
-            echo "--Running container--"
+            echo "Run container"
             docker compose up -d
           EOF

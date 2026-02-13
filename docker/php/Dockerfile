@@ -24,3 +24,5 @@ WORKDIR /app
 RUN chown -R www-data:www-data /var/www
 
 COPY . /app
+
+RUN composer install --prefer-dist --no-interaction

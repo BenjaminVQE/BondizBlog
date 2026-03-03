@@ -1,6 +1,7 @@
-FROM php:8.4-fpm
+FROM php:8.4-fpm AS base
 
-# Dépendances système
+WORKDIR /app
+
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -12,17 +13,57 @@ RUN apt-get update && apt-get install -y \
     pdo \
     pdo_mysql \
     zip \
-    opcache
+    opcache \
+    && rm -rf /var/lib/apt/lists/*
 
-# Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Dossier de travail
-WORKDIR /app
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# Permissions
-RUN chown -R www-data:www-data /var/www
+FROM base AS prod
 
-COPY . /app
+ENV APP_ENV=prod
+ENV APP_DEBUG=0
 
-RUN composer install --prefer-dist --no-interaction
+COPY composer.* symfony.* ./
+
+RUN composer install \
+    --no-dev \
+    --prefer-dist \
+    --no-scripts \
+    --no-autoloader \
+    --no-interaction
+
+
+COPY . .
+
+RUN set -eux; \
+    mkdir -p var/cache var/log; \
+    composer dump-autoload --classmap-authoritative --no-dev; \
+    composer run-script --no-dev post-install-cmd; \
+    chown -R www-data:www-data var; \
+    chmod -R 775 var
+
+CMD ["php-fpm"]
+
+FROM base AS dev
+
+ENV APP_ENV=dev
+ENV APP_DEBUG=1
+
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+COPY composer.* symfony.* ./
+
+RUN composer install \
+    --prefer-dist \
+    --no-interaction
+
+COPY . .
+
+RUN mkdir -p var/cache var/log \
+    && chown -R www-data:www-data var \
+    && chmod -R 775 var
+
+CMD ["php-fpm"]

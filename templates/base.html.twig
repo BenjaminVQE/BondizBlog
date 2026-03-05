@@ -13,16 +13,21 @@
 			<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 			<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 		{% endblock %}
-
-		{% block javascripts %}
+		{% block meta %}
+			<meta name="description" content="Découvrez Bondiz, le blog dédié aux rencontres amicales. Conseils, astuces et récits pour élargir votre cercle social et créer des amitiés sincères.">
+			<meta name="keywords" content="Bondiz, blog, rencontres amicales, conseils, astuces, amitiés sincères, élargir cercle social">
+			<meta name="author" content="Bondiz Team">
 		{% endblock %}
+
+		{% block javascripts %}{% endblock %}
 	</head>
 	<body>
 		<!-- Navigation -->
 		<nav class="navbar">
 			<div class="container nav-content">
 				<a href="{{ path('app_home') }}" class="logo">
-					<span class="text-gradient">Bondiz</span><span style="color: var(--accent);">.</span>
+					<span class="text-gradient">Bondiz</span>
+					<span style="color: var(--accent);">.</span>
 				</a>
 				<div class="nav-links">
 					<a href="{{ path('app_home') }}" class="nav-link">Accueil</a>

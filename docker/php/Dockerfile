@@ -59,11 +59,11 @@ RUN pecl install xdebug \
 
 COPY composer.* symfony.* ./
 
+COPY . .
+
 RUN composer install \
     --prefer-dist \
     --no-interaction
-
-COPY . .
 
 RUN mkdir -p var/cache var/log \
     && chown -R www-data:www-data var \

@@ -37,10 +37,10 @@ jobs:
             cd /home/debian/bondiz-blog/
             
             echo "Stop container if exist"
-            docker stop bondiz-blog-container || true
+            docker compose stop bondiz-blog-container || true
             
             echo "Remove container if exist"
-            docker rm bondiz-blog-container || true
+            docker compose rm bondiz-blog-container || true
             
             echo "Run container"
             docker compose up -d

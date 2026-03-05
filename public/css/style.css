@@ -1,13 +1,13 @@
 :root {
-    --primary: #FF8E53;
-    --primary-dark: #E67E22;
-    --secondary: #2EC4B6;
-    --dark: #0F172A;
+    --primary: #8432fe;
+    --primary-dark: #000000;
+    --secondary: #f98cd7;
+    --dark: #000000;
     --dark-lighter: #1E293B;
-    --light: #FFFBF7;
+    --light: #FFFFFF;
     --gray: #64748B;
     --white: #FFFFFF;
-    --gradient-main: linear-gradient(135deg, #FF8E53 0%, #FF6B6B 100%);
+    --gradient-main: linear-gradient(135deg, #e4f644 0%, #f98cd7 100%);
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -19,6 +19,11 @@
 *::after {
     box-sizing: border-box;
 }
+
+body {
+  background-color: var(--primary);
+  color: var(--white);
+}   
 
 body {
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;

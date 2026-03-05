@@ -43,6 +43,5 @@ jobs:
             docker rm bondiz-blog-container || true
             
             echo "Run container"
-            ls -lah
             docker compose up -d
           EOF

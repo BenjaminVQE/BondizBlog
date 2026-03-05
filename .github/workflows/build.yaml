@@ -14,12 +14,12 @@ jobs:
       REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
       REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
       REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }}
-      APP_ENV: ${{ secrets.APP_ENV }}
+      APP_ENV: ${{ vars.APP_ENV }}
       MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
       MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
       MYSQL_USER: ${{ secrets.MYSQL_USER }}
       MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-      MAILER_DSN: ${{ secrets.MAILER_DSN }}
+      MAILER_DSN: ${{ vars.MAILER_DSN }}
 
     steps:
       - name: Checkout code

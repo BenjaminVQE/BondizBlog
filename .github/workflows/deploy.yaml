@@ -40,7 +40,7 @@ jobs:
             docker compose stop bondiz-blog-container || true
             
             echo "Remove container if exist"
-            docker compose rm bondiz-blog-container || true
+            docker compose rm -f bondiz-blog-container || true
             
             echo "Run container"
             docker compose up -d

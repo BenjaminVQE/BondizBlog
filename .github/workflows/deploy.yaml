@@ -32,9 +32,9 @@ jobs:
 
       - name: SSH into VPS and deploy
         run: |
-          ssh -t $VPS_USER@$VPS_IP << 'EOF'
+          ssh $VPS_USER@$VPS_IP << 'EOF'
             echo "Go to directory bondiz-blog"
-            cd /home/ubuntu/bondiz-blog/
+            cd /home/debian/bondiz-blog/
             
             echo "Stop container if exist"
             docker stop bondiz-blog-container || true

@@ -40,8 +40,14 @@ jobs:
       - name: Build Docker Image
         run: docker build -t $REGISTRY_NAME/bondiz-blog --target=prod -f ./docker/php/Dockerfile .
 
+      - name: Build Nginx Docker Image
+        run: docker build -t $REGISTRY_NAME/bondiz-blog-nginx -f ./docker/nginx/Dockerfile .
+
       - name: Log in to Docker Registry
         run: echo $REGISTRY_PASSWORD | docker login $REGISTRY_NAME -u $REGISTRY_USERNAME --password-stdin
 
       - name: Push Docker Image
         run: docker push $REGISTRY_NAME/bondiz-blog
+
+      - name: Push Nginx Docker Image
+        run: docker push $REGISTRY_NAME/bondiz-blog-nginx

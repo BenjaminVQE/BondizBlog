@@ -17,6 +17,9 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --link --chmod=755 docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+
+ENTRYPOINT ["docker-entrypoint"]
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 

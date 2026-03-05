@@ -36,6 +36,7 @@ jobs:
           sed -i "s|MYSQL_USER=.*|MYSQL_USER=$MYSQL_USER|g" .env
           sed -i "s|MYSQL_PASSWORD=.*|MYSQL_PASSWORD=$MYSQL_PASSWORD|g" .env
           sed -i "s|MAILER_DSN=.*|MAILER_DSN=$MAILER_DSN|g" .env
+          cat .env
 
       - name: Build Docker Image
         run: docker build -t $REGISTRY_NAME/bondiz-blog --target=prod -f ./docker/php/Dockerfile .

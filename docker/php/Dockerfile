@@ -28,11 +28,11 @@ FROM base AS prod
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
 
-COPY composer.* symfony.* ./
+COPY  composer.* symfony.* ./
+
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
 COPY . .
-
-RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 RUN mkdir -p var/cache var/log \
     && chmod +x bin/console

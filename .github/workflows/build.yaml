@@ -19,6 +19,7 @@ jobs:
       MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
       MYSQL_USER: ${{ secrets.MYSQL_USER }}
       MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+      DATABASE_URL: "mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@database:3306/${{ secrets.MYSQL_DATABASE }}"
       MAILER_DSN: ${{ vars.MAILER_DSN }}
 
     steps:
@@ -35,6 +36,7 @@ jobs:
           sed -i "s|MYSQL_DATABASE=.*|MYSQL_DATABASE=$MYSQL_DATABASE|g" .env
           sed -i "s|MYSQL_USER=.*|MYSQL_USER=$MYSQL_USER|g" .env
           sed -i "s|MYSQL_PASSWORD=.*|MYSQL_PASSWORD=$MYSQL_PASSWORD|g" .env
+          sed -i "s|DATABASE_URL=.*|DATABASE_URL=$DATABASE_URL|g" .env
           sed -i "s|MAILER_DSN=.*|MAILER_DSN=$MAILER_DSN|g" .env
 
       - name: Build Docker Image

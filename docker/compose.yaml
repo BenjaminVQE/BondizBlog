@@ -11,7 +11,9 @@ services:
       - symfony
 
   nginx:
-    image: nginx:alpine
+    build:
+      context: ..
+      dockerfile: docker/nginx/Dockerfile
     container_name: nginx
     ports:
       - "80:80"

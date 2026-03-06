@@ -2,4 +2,4 @@ FROM nginx:alpine
 
 COPY ./public /app/public
 
-COPY ./default.conf /etc/nginx/conf.d/default.conf
+COPY ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf

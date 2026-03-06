@@ -87,8 +87,12 @@ body {
 
 .nav-content {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 4rem;
+}
+
+.nav-content>*:last-child {
+    margin-left: auto;
 }
 
 .logo {
@@ -111,10 +115,7 @@ body {
 .nav-links {
     display: flex;
     gap: 2rem;
-    margin-left: -5rem;
-    /* Pull navigation closer to logo */
     z-index: 2;
-    /* Ensure links stay above scaled logo if they overlap */
 }
 
 .nav-link {

@@ -30,21 +30,17 @@ ENV APP_DEBUG=0
 
 COPY composer.* symfony.* ./
 
-RUN composer install \
-    --no-dev \
-    --prefer-dist \
-    --no-scripts \
-    --no-autoloader \
-    --no-interaction
-
+RUN set -eux; \
+    composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
 
 COPY . .
 
 RUN set -eux; \
     mkdir -p var/cache var/log; \
-    composer dump-autoload --classmap-authoritative --no-dev --no-scripts; \
-    chown -R www-data:www-data var; \
-    chmod -R 775 var
+    composer dump-autoload --classmap-authoritative --no-dev; \
+    composer dump-env prod; \
+    composer run-script --no-dev post-install-cmd; \
+    chmod +x bin/console; sync;
 
 CMD ["php-fpm"]
 

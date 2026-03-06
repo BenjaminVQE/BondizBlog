@@ -34,6 +34,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 
 COPY . .
 
+RUN chown -R www-data:www-data /app
+
 RUN mkdir -p var/cache var/log \
     && chmod +x bin/console
 

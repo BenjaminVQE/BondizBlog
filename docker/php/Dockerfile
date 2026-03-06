@@ -30,10 +30,9 @@ ENV APP_DEBUG=0
 
 COPY composer.* symfony.* ./
 
-RUN set -eux; \
-    composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
-
 COPY . .
+
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 RUN mkdir -p var/cache var/log \
     && chmod +x bin/console

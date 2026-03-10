@@ -88,11 +88,8 @@ body {
 .nav-content {
     display: flex;
     align-items: center;
-    gap: 4rem;
-}
-
-.nav-content>*:last-child {
-    margin-left: auto;
+    justify-content: space-between;
+    position: relative;
 }
 
 .logo {
@@ -116,6 +113,9 @@ body {
     display: flex;
     gap: 2rem;
     z-index: 2;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .nav-link {

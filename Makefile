@@ -21,7 +21,13 @@ dc-down:
 	$(DOCKER_COMPOSE) down
 
 ## Redémarrer les containers
-dc-restart: down up
+dc-restart: dc-down dc-up
+
+## Alias plus courts
+up: dc-up
+down: dc-down
+restart: dc-restart
+sh: dc-bash
 
 ## Voir les logs
 dc-logs:
@@ -40,7 +46,7 @@ dc-bash:
 	$(DOCKER_COMPOSE) exec $(PHP_SERVICE) bash
 
 ## Installer toutes les dépendances composer
-composer-i:
+composer-install:
 	$(DOCKER_COMPOSE) exec $(PHP_SERVICE) composer install
 
 ## Installer un package composer (ex: make composer-require pkg/name)

@@ -25,6 +25,14 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.VPS_IP }} >> ~/.ssh/known_hosts
 
+      - name: Prepare directory on VPS
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} "mkdir -p /home/debian/bondiz-blog"
+
+      - name: Copy docker-compose.prod.yaml to VPS
+        run: |
+          scp docker-compose.prod.yaml ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }}:/home/debian/bondiz-blog/docker-compose.prod.yaml
+
       - name: SSH into VPS and deploy
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} \

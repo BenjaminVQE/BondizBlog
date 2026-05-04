@@ -9,39 +9,46 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    env:
-      VPS_USER: ${{ secrets.VPS_USER }}
-      VPS_IP: ${{ secrets.VPS_IP }}
-      REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup SSH for VPS
-        uses: webfactory/ssh-agent@v0.9.1
+        uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
       - name: Add VPS to known_hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H $VPS_IP >> ~/.ssh/known_hosts
-          cat ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.VPS_IP }} >> ~/.ssh/known_hosts
 
       - name: SSH into VPS and deploy
         run: |
-          ssh $VPS_USER@$VPS_IP << 'EOF'
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} \
+            "export REGISTRY_NAME='${{ secrets.REGISTRY_NAME }}' && \
+             export REGISTRY_USERNAME='${{ secrets.REGISTRY_USERNAME }}' && \
+             export REGISTRY_PASSWORD='${{ secrets.REGISTRY_PASSWORD }}' && \
+             export MYSQL_ROOT_PASSWORD='${{ secrets.MYSQL_ROOT_PASSWORD }}' && \
+             export MYSQL_DATABASE='${{ secrets.MYSQL_DATABASE }}' && \
+             export MYSQL_USER='${{ secrets.MYSQL_USER }}' && \
+             export MYSQL_PASSWORD='${{ secrets.MYSQL_PASSWORD }}' && \
+             /bin/bash -s" << 'EOF'
+            set -e
             echo "Go to directory bondiz-blog"
             cd /home/debian/bondiz-blog/
             
-            echo "Stop container if exist"
-            docker compose stop bondiz-blog-container || true
+            echo "Login to registry"
+            echo "$REGISTRY_PASSWORD" | docker login "$REGISTRY_NAME" -u "$REGISTRY_USERNAME" --password-stdin
+
+            echo "Pulling latest images"
+            docker compose -f docker-compose.prod.yaml pull
             
-            echo "Remove container if exist"
-            docker compose rm -f bondiz-blog-container || true
+            echo "Running container"
+            docker compose -f docker-compose.prod.yaml up -d --remove-orphans
             
-            echo "Run container"
-            docker compose up -d
+            echo "Cleaning up old images"
+            docker image prune -f
           EOF

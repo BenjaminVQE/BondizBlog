@@ -35,7 +35,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 COPY . .
 
 RUN mkdir -p var/cache var/log \
-    && chmod +x bin/console
+    && chmod +x bin/console \
+    && php bin/console assets:install public
 
 RUN chown -R www-data:www-data /app
 USER www-data

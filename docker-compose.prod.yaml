@@ -6,6 +6,7 @@ services:
     environment:
       APP_ENV: prod
       APP_DEBUG: 0
+      APP_SECRET: ${APP_SECRET}
       DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:3306/${MYSQL_DATABASE}?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
     networks:
       - symfony
